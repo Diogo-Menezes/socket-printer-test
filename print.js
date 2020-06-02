@@ -7,7 +7,11 @@ const port1 = '/dev/serial0';
 const dataObj = {
   restaurantId: '5ead89c14707270008f5bdac',
   amount: '495',
-  basket: [{ name: 'Courgette Fries', price: '3.95', amount: 1 }],
+  basket: [
+    { name: 'Courgette Fries', price: '3.95', amount: 1 },
+    { name: 'Courgette Fries', price: '3.95', amount: 2 },
+    { name: 'Courgette Fries', price: '3.95', amount: 3 },
+  ],
   customer: {
     deliveryOptions: 'collection',
     payOptions: [],
@@ -58,10 +62,10 @@ const serialPort = new SerialPort(port1, {
       .indent(10)
       .printLine('Loql order')
       .printLine('')
-      .printText(dataObj.customer.deliveryOptions)
-      .printText(dataObj.customer.allergiesIntolerances)
-      .printText('Online: ' + dataObj.stripePaid)
-      .printText('Order received ' + date)
+      .printLine(dataObj.customer.deliveryOptions)
+      .printLine(dataObj.customer.allergiesIntolerances)
+      .printLine('Online: ' + dataObj.stripePaid)
+      .printLine('Order received ' + date)
       .printLine('')
       .small(true);
     dataObj.basket.forEach(item =>
