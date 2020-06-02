@@ -130,18 +130,3 @@ function toPrint(printer, dataObj) {
     .printLine('')
     .horizontalLine(32);
 }
-
-const serialPort = new SerialPort(port1, {
-  baudRate: 19200,
-}).on('open', function () {
-  var printer = new Printer(serialPort);
-  printer.on('ready', function () {
-    toPrint(printer);
-    toPrint(printer);
-
-    printer.print(function () {
-      console.log('done');
-      process.exit();
-    });
-  });
-});
