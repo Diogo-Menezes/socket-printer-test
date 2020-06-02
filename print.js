@@ -39,7 +39,7 @@ const dataObj = {
   messageType: 'order',
 };
 
-function toPrint(printer) {
+export function toPrint(printer, dataObj) {
   let total = 0;
 
   const date = new Intl.DateTimeFormat('en-UK', {

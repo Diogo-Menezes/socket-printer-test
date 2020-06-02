@@ -1,10 +1,12 @@
 const WebSocket = require('ws');
+const { toPrint } = require('./print');
 
 const port = '/dev/ttyUSB0';
 
-const url =
-  'wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=test&businessId=5ead89c14707270008f5bdac';
+const secret = 'whysoserious';
+const id = ' 5eaa883c0cf47200076a4fea';
 
+const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
 const ws = new WebSocket(url);
 
 console.log('Set up heartbeat');
@@ -35,10 +37,13 @@ ws.on('message', data => {
       var printer = new Printer(serialPort);
       printer.on('ready', function () {
         console.log('printing');
-        printer.print(function () {
-          console.log('done');
-          process.exit();
-        });
+
+        toPrint(printer, dataObj);
+        toPrint(printer, dataObj);
+        // printer.print(function () {
+        //   console.log('done');
+        //   process.exit();
+        // });
       });
     });
   }
