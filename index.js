@@ -37,6 +37,7 @@ ws.on('message', data => {
       printer.on('ready', function () {
         console.log('printing');
         toPrint(printer, dataObj);
+        toPrint(printer, dataObj);
         // printer.print(function () {
         //   console.log('done');
         //   process.exit();
