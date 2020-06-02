@@ -70,7 +70,7 @@ const serialPort = new SerialPort(port1, {
       .small(true);
     dataObj.basket.forEach(item =>
       // printer.printText(`${item.amount} ${item.name}${item.price}`),
-      printer.printText(item.amount + ' ' + item.name + ' ' + item.price),
+      printer.printLine(item.amount + ' ' + item.name + ' ' + item.price),
     );
 
     // printer
