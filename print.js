@@ -128,4 +128,4 @@ const serialPort = new SerialPort(port1, {
     });
   });
 });
-module.exports = toPrint;
+// module.exports = toPrint;
