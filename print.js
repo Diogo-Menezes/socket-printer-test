@@ -81,9 +81,9 @@ const serialPort = new SerialPort(port1, {
     //   .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
     //   .printLine('')
     //   .printLine('')
-      .print(function () {
-        console.log('done');
-        process.exit();
-      });
+    printer.print(function () {
+      console.log('done');
+      process.exit();
+    });
   });
 });
