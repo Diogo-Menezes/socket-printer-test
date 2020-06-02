@@ -35,7 +35,7 @@ const dataObj = {
   messageType: 'order',
 };
 
-const serialPort = new SerialPort(port1, {
+const serialPort = new SerialPort(port2, {
   baudRate: 19200,
 }).on('open', function () {
   var printer = new Printer(serialPort);
