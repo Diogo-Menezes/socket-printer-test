@@ -44,7 +44,8 @@ const serialPort = new SerialPort(port1, {
 }).on('open', function () {
   var printer = new Printer(serialPort);
   printer.on('ready', function () {
-    printer;
+    let total = 0;
+
     const date = new Intl.DateTimeFormat('en-UK', {
       year: 'numeric',
       month: 'long',
@@ -54,10 +55,9 @@ const serialPort = new SerialPort(port1, {
       hour12: false,
     }).format(new Date(dataObj.createdAt));
 
-    console.log('printing');
     printer
       .bold(true)
-      .indent(5)
+      .indent(0)
       .printLine('Loql order')
       .printLine('')
       .printLine(dataObj.customer.deliveryOptions)
@@ -67,16 +67,52 @@ const serialPort = new SerialPort(port1, {
       .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
       .printLine('Order received ' + date)
       .printLine('')
-      .printText('Quantity')
-      .indent(2)
-      .printText('Name')
-      .indent(2)
-      .printText('Price')
-      .indent(0)
+      .printText(`Quantity   Name    Price`)
+      .printLine('')
+      .horizontalLine(16)
+      .small(true);
+    dataObj.basket.forEach(item => {
+      printer.printLine(`${item.amount} ${item.name} ${item.price}`);
+
+      total += parseInt(item.amount) * parseInt(item.price);
+    });
+
+    printer
+      .printLine('')
+      .small(false)
+      .printText(`Total: £${total}`)
+      .printLine('')
+      .printText(
+        dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
+      )
+      .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
+      .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .horizontalLine(16);
+
+    //Kitchen version
+    printer
+      .printLine('Loql order')
+      .printLine('')
+      .printLine(dataObj.customer.deliveryOptions)
+      .printLine('')
+      .printLine(dataObj.customer.allergiesIntolerances)
+      .printLine('')
+      .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
+      .printLine('Order received ' + date)
+      .printLine('')
+      .printText(`Quantity   Name    Price`)
+      .printLine('')
       .horizontalLine(16)
       .small(true);
     dataObj.basket.forEach(item =>
-      printer.printLine(`${item.amount} ${item.name}${item.price}`),
+      printer.printLine(`${item.amount} ${item.name} ${item.price}`),
     );
 
     printer
@@ -90,7 +126,13 @@ const serialPort = new SerialPort(port1, {
       .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
       .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
       .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
       .printLine('');
+
     printer.print(function () {
       console.log('done');
       process.exit();
