@@ -118,7 +118,7 @@ const serialPort = new SerialPort(port1, {
     printer
       .printLine('')
       .small(false)
-      .printText('Total: ' + dataObj.amount)
+      .printText(`Total: £${total}`)
       .printLine('')
       .printText(
         dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
