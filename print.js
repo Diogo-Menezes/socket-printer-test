@@ -38,7 +38,7 @@ const dataObj = {
   _id: '5ecfce7e9975f00008aaf2ec',
   messageType: 'order',
 };
-function toPrint(printer, dataObj) {
+module.exports = function toPrint(printer, dataObj) {
   let total = 0;
 
   const date = new Intl.DateTimeFormat('en-UK', {
@@ -112,7 +112,7 @@ function toPrint(printer, dataObj) {
     .printLine('')
     .printLine('')
     .horizontalLine(32);
-}
+};
 
 const serialPort = new SerialPort(port1, {
   baudRate: 19200,
@@ -128,4 +128,3 @@ const serialPort = new SerialPort(port1, {
     });
   });
 });
-// module.exports = toPrint;
