@@ -64,7 +64,7 @@ const serialPort = new SerialPort(port1, {
       .printLine('')
       .printLine(dataObj.customer.allergiesIntolerances)
       .printLine('')
-      .printLine('Online: ' + dataObj.stripePaid)
+      .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
       .printLine('Order received ' + date)
       .printLine('')
       .printText('Quantity')
@@ -73,7 +73,8 @@ const serialPort = new SerialPort(port1, {
       .indent(2)
       .printText('Price')
       .indent(0)
-      .small(true)
+      .horizontalLine(16)
+      .small(true);
     dataObj.basket.forEach(item =>
       printer.printLine(`${item.amount} ${item.name}${item.price}`),
     );
@@ -81,7 +82,7 @@ const serialPort = new SerialPort(port1, {
     printer
       .printLine('')
       .small(false)
-      .printText("Total: " + dataObj.amount)
+      .printText('Total: ' + dataObj.amount)
       .printLine('')
       .printText(
         dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
