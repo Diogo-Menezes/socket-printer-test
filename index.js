@@ -1,6 +1,7 @@
 const WebSocket = require('ws');
+const SerialPort = require('serialport');
 
-const port = '/dev/ttyUSB0';
+const port = '/dev/serial0';
 
 const secret = 'whysoserious';
 const id = ' 5eaa883c0cf47200076a4fea';
@@ -27,10 +28,9 @@ ws.on('message', data => {
 
     const Printer = require('thermalprinter');
 
-    const SerialPort = require('serialport'),
-      serialPort = new SerialPort(port, {
-        baudRate: 19200,
-      });
+    serialPort = new SerialPort(port, {
+      baudRate: 19200,
+    });
 
     serialPort.on('open', function () {
       var printer = new Printer(serialPort);
