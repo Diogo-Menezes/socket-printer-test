@@ -56,35 +56,40 @@ const serialPort = new SerialPort(port1, {
 
     console.log('printing');
     printer
-      .indent(10)
-      .horizontalLine(16)
       .bold(true)
-      .indent(10)
+      .indent(5)
       .printLine('Loql order')
       .printLine('')
       .printLine(dataObj.customer.deliveryOptions)
+      .printLine('')
       .printLine(dataObj.customer.allergiesIntolerances)
+      .printLine('')
       .printLine('Online: ' + dataObj.stripePaid)
       .printLine('Order received ' + date)
       .printLine('')
-      .small(true);
+      .printText('Quantity')
+      .indent(2)
+      .printText('Name')
+      .indent(2)
+      .printText('Price')
+      .indent(0)
+      .small(true)
     dataObj.basket.forEach(item =>
-      // printer.printText(`${item.amount} ${item.name}${item.price}`),
-      printer.printLine(item.amount + ' ' + item.name + ' ' + item.price),
+      printer.printLine(`${item.amount} ${item.name}${item.price}`),
     );
 
-    // printer
-    //   .printLine('')
-    //   .small(false)
-    //   .printText(dataObj.amount)
-    //   .printLine('')
-    //   .printText(
-    //     dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
-    //   )
-    //   .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
-    //   .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
-    //   .printLine('')
-    //   .printLine('')
+    printer
+      .printLine('')
+      .small(false)
+      .printText("Total: " + dataObj.amount)
+      .printLine('')
+      .printText(
+        dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
+      )
+      .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
+      .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
+      .printLine('')
+      .printLine('');
     printer.print(function () {
       console.log('done');
       process.exit();
