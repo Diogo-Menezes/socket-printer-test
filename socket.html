@@ -15,21 +15,29 @@
       data: {
         endpoint: '',
         messages: [],
-        websocket: undefined
+        websocket: undefined,
       },
       methods: {
         connect() {
-          const websocket = this.websocket = new WebSocket('wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=test&businessId=5ead89c14707270008f5bdac');
+          const secret = 'whysoserious';
+          const id = ' 5eaa883c0cf47200076a4fea';
+
+          const secret1 = 'test';
+          const id1 = '5ead89c14707270008f5bdac';
+
+          const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret1}&businessId=${id1}`;
+          const websocket = (this.websocket = new WebSocket(url));
 
           websocket.onclose = ({ wasClean, code, reason }) => {
             this.messages.push(
-              `onclose:   ${JSON.stringify({ wasClean, code, reason })}`);
+              `onclose:   ${JSON.stringify({ wasClean, code, reason })}`,
+            );
           };
 
           websocket.onerror = error => {
             console.log(error);
             this.messages.push(
-              'onerror:   An error has occurred. See console for details.'
+              'onerror:   An error has occurred. See console for details.',
             );
           };
 
@@ -45,7 +53,7 @@
           this.messages.push('client:    Sending a message.');
 
           this.websocket.send(
-            JSON.stringify({ action: 'routeA', data: 'Hello from client.' })
+            JSON.stringify({ action: 'routeA', data: 'Hello from client.' }),
           );
         },
         disconnect() {
@@ -53,8 +61,8 @@
           // '$disconnect' route.
           this.messages.push('client:    Closing the connection.');
           this.websocket.close();
-        }
-      }
-    })
+        },
+      },
+    });
   </script>
 </html>
