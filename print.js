@@ -72,7 +72,7 @@ function toPrint(printer) {
     .small(true)
     .printText(`Quantity   Name    Price`)
     .printLine('')
-    .horizontalLine(16);
+    .horizontalLine(32);
 
   dataObj.basket.forEach(item => {
     printer.printLine(`${item.amount} ${item.name} ${item.price}`);
@@ -95,6 +95,8 @@ function toPrint(printer) {
     .printText(
       dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
     )
+    .printLine('')
+    .printLine('')
     .printLine(`${dataObj.customer.firstName} ${dataObj.customer.lastName}`)
     .printLine(`${dataObj.customer.phone}`)
     .printLine(`${dataObj.customer.houseNumber} ${dataObj.customer.street}`)
@@ -107,7 +109,7 @@ function toPrint(printer) {
     .printLine('')
     .printLine('')
     .printLine('')
-    .horizontalLine(16);
+    .horizontalLine(32);
 }
 
 const serialPort = new SerialPort(port1, {
