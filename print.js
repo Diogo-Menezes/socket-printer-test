@@ -15,10 +15,10 @@ const dataObj = {
   customer: {
     deliveryOptions: 'collection',
     payOptions: [],
-    street: '',
-    houseNumber: '',
-    townCity: '',
-    postcode: '',
+    street: 'Montague Road',
+    houseNumber: '8',
+    townCity: 'Berkhamsted',
+    postcode: 'HP4 3DS',
     specialRequest: 'Special request 1\nSpecial request 2',
     allergiesIntolerances: 'I"m allergic to nuts and squirrels',
     instructions: '',
@@ -95,8 +95,11 @@ function toPrint(printer) {
     .printText(
       dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
     )
-    .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
-    .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
+    .printLine(`${dataObj.customer.firstName} ${dataObj.customer.lastName}`)
+    .printLine(`${dataObj.customer.phone}`)
+    .printLine(`${dataObj.customer.houseNumber} ${dataObj.customer.street}`)
+    .printLine(`${dataObj.customer.townCity}`)
+    .printLine(`${dataObj.customer.postcode}`)
     .printLine('')
     .printLine('')
     .printLine('')
