@@ -60,26 +60,27 @@ const serialPort = new SerialPort(port, {
       .printLine('')
       .printText(dataObj.customer.deliveryOptions)
       .printText(dataObj.customer.allergiesIntolerances)
-      .printText(`online: ${dataObj.stripePaid}`)
-      .printText(`Order received ${date}`)
+      .printText('Online: ' + dataObj.stripePaid)
+      .printText('Order received ' + date)
       .printLine('')
       .small(true);
     dataObj.basket.forEach(item =>
-      printer.printText(`${item.quantity} ${item.name}${item.price}`),
+      // printer.printText(`${item.amount} ${item.name}${item.price}`),
+      printer.printText(item.amount + ' ' + item.name + ' ' + item.price),
     );
 
-    printer
-      .printLine('')
-      .small(false)
-      .printText(dataObj.amount)
-      .printLine('')
-      .printText(
-        dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
-      )
-      .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
-      .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
-      .printLine('')
-      .printLine('')
+    // printer
+    //   .printLine('')
+    //   .small(false)
+    //   .printText(dataObj.amount)
+    //   .printLine('')
+    //   .printText(
+    //     dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
+    //   )
+    //   .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
+    //   .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
+    //   .printLine('')
+    //   .printLine('')
       .print(function () {
         console.log('done');
         process.exit();
