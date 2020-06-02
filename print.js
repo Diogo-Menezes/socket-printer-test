@@ -38,8 +38,7 @@ const dataObj = {
   _id: '5ecfce7e9975f00008aaf2ec',
   messageType: 'order',
 };
-
-export function toPrint(printer, dataObj) {
+function toPrint(printer, dataObj) {
   let total = 0;
 
   const date = new Intl.DateTimeFormat('en-UK', {
@@ -129,3 +128,4 @@ const serialPort = new SerialPort(port1, {
     });
   });
 });
+module.exports = toPrint;
