@@ -88,7 +88,7 @@ function toPrint(printer) {
   printer
     .printLine('')
     .small(false)
-    .printText(`Total: £${formattedTotal}`)
+    .printText(`Total: ${formattedTotal}`)
     .printLine('')
     .printLine('')
 
