@@ -39,99 +39,81 @@ const dataObj = {
   messageType: 'order',
 };
 
+function toPrint(printer) {
+  let total = 0;
+
+  const date = new Intl.DateTimeFormat('en-UK', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: false,
+  }).format(new Date(dataObj.createdAt));
+
+  printer
+    .bold(true)
+    .indent(0)
+    .printLine('')
+    .printLine('')
+    .printLine('')
+    .printLine('Loql order')
+    .printLine('')
+    .printLine(dataObj.customer.deliveryOptions)
+    .printLine('')
+    .printLine(dataObj.customer.allergiesIntolerances)
+    .printLine('')
+    .inverse(true)
+    .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
+    .inverse(false)
+    .printLine('Order received')
+    .printLine(date)
+    .printLine('')
+    .small(true)
+    .printText(`Quantity   Name    Price`)
+    .printLine('')
+    .horizontalLine(16);
+
+  dataObj.basket.forEach(item => {
+    printer.printLine(`${item.amount} ${item.name} ${item.price}`);
+
+    total += parseInt(item.amount) * parseInt(item.price);
+  });
+
+  const formattedTotal = new Intl.NumberFormat('en-UK', {
+    style: 'currency',
+    currency: 'GBP',
+  }).format(+total);
+
+  printer
+    .printLine('')
+    .small(false)
+    .printText(`Total: £${formattedTotal}`)
+    .printLine('')
+    .printLine('')
+
+    .printText(
+      dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
+    )
+    .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
+    .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
+    .printLine('')
+    .printLine('')
+    .printLine('')
+    .printLine('')
+    .printLine('')
+    .printLine('')
+    .printLine('')
+    .horizontalLine(16);
+}
+
 const serialPort = new SerialPort(port1, {
   baudRate: 19200,
 }).on('open', function () {
   var printer = new Printer(serialPort);
   printer.on('ready', function () {
-    let total = 0;
-
-    const date = new Intl.DateTimeFormat('en-UK', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: false,
-    }).format(new Date(dataObj.createdAt));
-
-    printer
-      .bold(true)
-      .indent(0)
-      .printLine('Loql order')
-      .printLine('')
-      .printLine(dataObj.customer.deliveryOptions)
-      .printLine('')
-      .printLine(dataObj.customer.allergiesIntolerances)
-      .printLine('')
-      .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
-      .printLine('Order received ' + date)
-      .printLine('')
-      .printText(`Quantity   Name    Price`)
-      .printLine('')
-      .horizontalLine(16)
-      .small(true);
-    dataObj.basket.forEach(item => {
-      printer.printLine(`${item.amount} ${item.name} ${item.price}`);
-
-      total += parseInt(item.amount) * parseInt(item.price);
-    });
-
-    printer
-      .printLine('')
-      .small(false)
-      .printText(`Total: £${total}`)
-      .printLine('')
-      .printText(
-        dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
-      )
-      .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
-      .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .horizontalLine(16);
-
-    //Kitchen version
-    printer
-      .printLine('Loql order')
-      .printLine('')
-      .printLine(dataObj.customer.deliveryOptions)
-      .printLine('')
-      .printLine(dataObj.customer.allergiesIntolerances)
-      .printLine('')
-      .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
-      .printLine('Order received ' + date)
-      .printLine('')
-      .printText(`Quantity   Name    Price`)
-      .printLine('')
-      .horizontalLine(16)
-      .small(true);
-    dataObj.basket.forEach(item =>
-      printer.printLine(`${item.amount} ${item.name} ${item.price}`),
-    );
-
-    printer
-      .printLine('')
-      .small(false)
-      .printText(`Total: £${total}`)
-      .printLine('')
-      .printText(
-        dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
-      )
-      .printText(`${dataObj.customer.street} ${dataObj.customer.houseNumber}`)
-      .printText(`${dataObj.customer.postcode} ${dataObj.customer.townCity}`)
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('')
-      .printLine('');
+    toPrint(printer);
+    toPrint(printer);
 
     printer.print(function () {
       console.log('done');
