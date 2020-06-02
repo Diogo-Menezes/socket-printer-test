@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <h1>WebSocket Client</h1>
+  <div id="app">
+    <button v-on:click="this.connect">Connect</button>
+    <button v-on:click="this.send">Send</button>
+    <button v-on:click="this.disconnect">Disconnect</button>
+    <pre>{{ messages.join('\n') }}</pre>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        endpoint: '',
+        messages: [],
+        websocket: undefined
+      },
+      methods: {
+        connect() {
+          const websocket = this.websocket = new WebSocket('wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=test&businessId=5ead89c14707270008f5bdac');
+
+          websocket.onclose = ({ wasClean, code, reason }) => {
+            this.messages.push(
+              `onclose:   ${JSON.stringify({ wasClean, code, reason })}`);
+          };
+
+          websocket.onerror = error => {
+            console.log(error);
+            this.messages.push(
+              'onerror:   An error has occurred. See console for details.'
+            );
+          };
+
+          websocket.onmessage = ({ data }) => {
+            this.messages.push(`onmessage: ${data}`);
+          };
+
+          websocket.onopen = () => {
+            this.messages.push('onopen:    Connected successfully.');
+          };
+        },
+        send() {
+          this.messages.push('client:    Sending a message.');
+
+          this.websocket.send(
+            JSON.stringify({ action: 'routeA', data: 'Hello from client.' })
+          );
+        },
+        disconnect() {
+          // WebSocket sends a message to API Gateway that gets routed to the
+          // '$disconnect' route.
+          this.messages.push('client:    Closing the connection.');
+          this.websocket.close();
+        }
+      }
+    })
+  </script>
+</html>

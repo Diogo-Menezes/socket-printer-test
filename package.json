@@ -1,0 +1,11 @@
+{
+    "name": "socket-example",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "serialport": "^9.0.0",
+        "thermalprinter": "^0.3.8",
+        "ws": "7.3.0"
+    }
+}
