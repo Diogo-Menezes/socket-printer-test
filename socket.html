@@ -41,7 +41,7 @@
           };
 
           websocket.onmessage = ({ data }) => {
-            this.messages.push(`onmessage: ${data}`);
+            this.messages.push(`onmessage: ${JSON.stringify(data,null,2)}`);
           };
 
           websocket.onopen = () => {

@@ -2,9 +2,30 @@ const dataObj = {
   restaurantId: '5ead89c14707270008f5bdac',
   amount: '1240',
   basket: [
-    { name: 'Courgette Fries', price: '3.95', amount: 1 },
-    { name: 'Falafel Bites', price: '3.95', amount: 1 },
-    { name: 'Grilled Halloumi', price: '4.50', amount: 1 },
+    {
+      id: 'rvofwxurbt',
+      name: 'Verulanium',
+      price: '7.95',
+      amount: 1,
+      optionsTotal: 2.95,
+      extrasTotal: 3.95,
+    },
+    {
+      id: '2wapzofkhl6',
+      name: 'Courgette Fries',
+      price: '3.95',
+      amount: 1,
+      optionsTotal: 0,
+      extrasTotal: 0,
+    },
+    {
+      id: 'a5q3szarbj',
+      name: 'Falafel Bites',
+      price: '3.95',
+      amount: 1,
+      optionsTotal: 0,
+      extrasTotal: 0,
+    },
   ],
   customer: {
     deliveryOptions: 'collection',

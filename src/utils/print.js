@@ -57,6 +57,16 @@ function print(printer, object) {
   object.basket.forEach(item => {
     printer.printLine(`${item.amount}    ${item.name}   ${item.price}`);
 
+    if (item.optionsTotal > 0) {
+      printer.printLine('options total: ' + item.optionsTotal);
+      total += item.optionsTotal;
+    }
+
+    if (extrasTotal > 0) {
+      printer.printLine('extras total: ' + item.extrasTotal);
+      total += item.extrasTotal;
+    }
+
     total += parseFloat(item.amount) * parseFloat(item.price);
   });
 
