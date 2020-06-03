@@ -62,7 +62,7 @@ function print(printer, object) {
       total += item.optionsTotal;
     }
 
-    if (extrasTotal > 0) {
+    if (item.extrasTotal > 0) {
       printer.printLine('extras total: ' + item.extrasTotal);
       total += item.extrasTotal;
     }
