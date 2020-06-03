@@ -32,29 +32,30 @@ function print(printer, object) {
     .printLine('Loql order')
     .big(false)
     .printLine(`Order no: ${object.orderNum}`)
-    .printLine('');
-
-  object.customer.deliveryOptions &&
-    printer
-      .printLine(object.customer.deliveryOptions)
-      .printLine('')
-      .printLine(`Allergies/Intolerance:`)
-      .printLine(
-        object.customer.allergiesIntolerances.chartAt(0).toUpperCase() +
-          String(object.customer.allergiesIntolerances).slice(1),
-      )
-      .printLine('')
-      .inverse(true)
-      .printLine(object.stripePaid ? ' Online ' : ' Pay on collection ')
-      .inverse(false)
-      .printLine('')
-      .printLine('Order received')
-      .printLine(date)
-      .printLine('')
-      .small(true)
-      .printText(`Quantity   Name    Price`)
-      .printLine('')
-      .horizontalLine(32);
+    .printLine('')
+    .printLine(
+      object.customer.deliveryOptions.chartAt(0).toUpperCase() +
+        object.customer.deliveryOptions.slice(1),
+    )
+    .printLine('')
+    .printLine(`Allergies/Intolerance:`)
+    .printLine(
+      object.customer.allergiesIntolerances
+        ? object.customer.allergiesIntolerances
+        : 'N/A',
+    )
+    .printLine('')
+    .inverse(true)
+    .printLine(object.stripePaid ? ' Online ' : ' Pay on collection ')
+    .inverse(false)
+    .printLine('')
+    .printLine('Order received')
+    .printLine(date)
+    .printLine('')
+    .small(true)
+    .printText(`Quantity   Name    Price`)
+    .printLine('')
+    .horizontalLine(32);
 
   object.basket.forEach(item => {
     printer.printLine(`${item.amount}    ${item.name}   ${item.price}`);
