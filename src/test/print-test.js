@@ -14,6 +14,11 @@ try {
     printer.on('ready', function () {
       print(printer, dataObj);
       print(printer, dataObj);
+
+      printer.print(function () {
+        console.log('done');
+        process.exit();
+      });
     });
   });
 } catch (error) {
