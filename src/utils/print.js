@@ -1,4 +1,15 @@
+const Printer = require('thermalprinter');
+
 function print(printer, object) {
+
+  if (!(printer instanceof Printer)) {
+    throw new Error('Invalid printer');
+  }
+
+  if (!object) {
+    throw new Error('Invalid object');
+  }
+
   let total = 0;
 
   const date = new Intl.DateTimeFormat('en-UK', {
@@ -8,7 +19,7 @@ function print(printer, object) {
     hour: 'numeric',
     minute: 'numeric',
     hour12: false,
-  }).format(new Date(dataObj.createdAt));
+  }).format(new Date(object.createdAt));
 
   printer
     .bold(true)
@@ -19,14 +30,14 @@ function print(printer, object) {
     .big(true)
     .printLine('Loql order')
     .big(false)
-    .printLine(`Order no: ${dataObj.orderNum}`)
+    .printLine(`Order no: ${object.orderNum}`)
     .printLine('')
-    .printLine(dataObj.customer.deliveryOptions)
+    .printLine(object.customer.deliveryOptions)
     .printLine('')
-    .printLine(dataObj.customer.allergiesIntolerances)
+    .printLine(object.customer.allergiesIntolerances)
     .printLine('')
     .inverse(true)
-    .printLine(dataObj.stripePaid ? 'Online' : 'Pay on collection')
+    .printLine(object.stripePaid ? 'Online' : 'Pay on collection')
     .inverse(false)
     .printLine('Order received')
     .printLine(date)
@@ -36,7 +47,7 @@ function print(printer, object) {
     .printLine('')
     .horizontalLine(32);
 
-  dataObj.basket.forEach(item => {
+  object.basket.forEach(item => {
     printer.printLine(`${item.amount} ${item.name} ${item.price}`);
 
     total += parseInt(item.amount) * parseInt(item.price);
@@ -55,15 +66,15 @@ function print(printer, object) {
     .printLine('')
 
     .printText(
-      dataObj.customer.specialRequest ? dataObj.customer.specialRequest : '',
+      object.customer.specialRequest ? object.customer.specialRequest : '',
     )
     .printLine('')
     .printLine('')
-    .printLine(`${dataObj.customer.firstName} ${dataObj.customer.lastName}`)
-    .printLine(`${dataObj.customer.phone}`)
-    .printLine(`${dataObj.customer.houseNumber} ${dataObj.customer.street}`)
-    .printLine(`${dataObj.customer.townCity}`)
-    .printLine(`${dataObj.customer.postcode}`)
+    .printLine(`${object.customer.firstName} ${object.customer.lastName}`)
+    .printLine(`${object.customer.phone}`)
+    .printLine(`${object.customer.houseNumber} ${object.customer.street}`)
+    .printLine(`${object.customer.townCity}`)
+    .printLine(`${object.customer.postcode}`)
     .printLine('')
     .printLine('')
     .printLine('')
