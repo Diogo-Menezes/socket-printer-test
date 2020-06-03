@@ -1,10 +1,10 @@
 const dataObj = {
   restaurantId: '5ead89c14707270008f5bdac',
-  amount: '495',
+  amount: '1240',
   basket: [
     { name: 'Courgette Fries', price: '3.95', amount: 1 },
-    { name: 'Courgette Fries', price: '3.95', amount: 2 },
-    { name: 'Courgette Fries', price: '3.95', amount: 3 },
+    { name: 'Falafel Bites', price: '3.95', amount: 1 },
+    { name: 'Grilled Halloumi', price: '4.50', amount: 1 },
   ],
   customer: {
     deliveryOptions: 'collection',

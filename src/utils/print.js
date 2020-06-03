@@ -57,7 +57,7 @@ function print(printer, object) {
   object.basket.forEach(item => {
     printer.printLine(`${item.amount}    ${item.name}   ${item.price}`);
 
-    total += parseInt(item.amount) * parseInt(item.price);
+    total += parseFloat(item.amount) * parseFloat(item.price);
   });
 
   const formattedTotal = new Intl.NumberFormat('en-UK', {
