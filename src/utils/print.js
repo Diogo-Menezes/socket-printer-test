@@ -83,17 +83,31 @@ function print(printer, object) {
     .printLine('')
     .printLine('')
     .printLine('Customer details:')
-    .printLine(`${object.customer.firstName} ${object.customer.lastName}`)
-    .printLine(`${object.customer.phone}`)
-    .printLine(`${object.customer.houseNumber} ${object.customer.street}`)
-    .printLine(`${object.customer.townCity}`)
-    .printLine(`${object.customer.postcode}`)
-    .printLine('')
-    .printLine('')
-    .printLine('')
-    .printLine('')
-    .printLine('')
-    .horizontalLine(32);
+    .printLine(`${object.customer.firstName} ${object.customer.lastName}`);
+
+  //Phone
+  object.customer.phone && printer.printLine(`${object.customer.phone}`);
+
+  //House number + street
+  object.customer.houseNumber &&
+    printer.printLine(
+      `${object.customer.houseNumber} ${object.customer.street}`,
+    );
+
+  //Town
+  object.customer.townCity && printer.printLine(`${object.customer.townCity}`);
+
+  //PostCode
+  object.customer.postcode &&
+    printer
+      .printLine(`${object.customer.postcode}`)
+      
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .printLine('')
+      .horizontalLine(32);
 }
 
 module.exports = print;
