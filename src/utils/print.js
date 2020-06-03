@@ -1,6 +1,7 @@
 const Printer = require('thermalprinter');
 
 function print(printer, object) {
+  console.log('print function called');
 
   if (!(printer instanceof Printer)) {
     throw new Error('Invalid printer');
