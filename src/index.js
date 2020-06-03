@@ -29,7 +29,7 @@ ws.on('open', () => console.log('connected'));
 ws.on('message', data => {
   const dataObj = JSON.parse(data);
   if (dataObj.messageType === 'order') {
-    console.log(`Order received:`, dataObj);
+    console.log(`Order received:`, JSON.stringify(dataObj, null, 2));
 
     try {
       serialPort = new SerialPort(port, { baudRate: 19200 });
