@@ -32,24 +32,32 @@ function print(printer, object) {
     .printLine('Loql order')
     .big(false)
     .printLine(`Order no: ${object.orderNum}`)
-    .printLine('')
-    .printLine(object.customer.deliveryOptions)
-    .printLine('')
-    .printLine(object.customer.allergiesIntolerances)
-    .printLine('')
-    .inverse(true)
-    .printLine(object.stripePaid ? 'Online' : 'Pay on collection')
-    .inverse(false)
-    .printLine('Order received')
-    .printLine(date)
-    .printLine('')
-    .small(true)
-    .printText(`Quantity   Name    Price`)
-    .printLine('')
-    .horizontalLine(32);
+    .printLine('');
+
+  object.customer.deliveryOptions &&
+    printer
+      .printLine(object.customer.deliveryOptions)
+      .printLine('')
+      .printLine(`Allergies/Intolerance:`)
+      .printLine(
+        object.customer.allergiesIntolerances.chartAt(0).toUpperCase() +
+          String(object.customer.allergiesIntolerances).slice(1),
+      )
+      .printLine('')
+      .inverse(true)
+      .printLine(object.stripePaid ? ' Online ' : ' Pay on collection ')
+      .inverse(false)
+      .printLine('')
+      .printLine('Order received')
+      .printLine(date)
+      .printLine('')
+      .small(true)
+      .printText(`Quantity   Name    Price`)
+      .printLine('')
+      .horizontalLine(32);
 
   object.basket.forEach(item => {
-    printer.printLine(`${item.amount} ${item.name} ${item.price}`);
+    printer.printLine(`${item.amount}    ${item.name}   ${item.price}`);
 
     total += parseInt(item.amount) * parseInt(item.price);
   });
@@ -62,22 +70,23 @@ function print(printer, object) {
   printer
     .printLine('')
     .small(false)
+    .big(true)
     .printText(`Total: ${formattedTotal}`)
+    .big(false)
     .printLine('')
     .printLine('')
-
+    .printLine('Special Requests:')
     .printText(
-      object.customer.specialRequest ? object.customer.specialRequest : '',
+      object.customer.specialRequest ? object.customer.specialRequest : 'N/A',
     )
     .printLine('')
     .printLine('')
+    .printLine('Customer details:')
     .printLine(`${object.customer.firstName} ${object.customer.lastName}`)
     .printLine(`${object.customer.phone}`)
     .printLine(`${object.customer.houseNumber} ${object.customer.street}`)
     .printLine(`${object.customer.townCity}`)
     .printLine(`${object.customer.postcode}`)
-    .printLine('')
-    .printLine('')
     .printLine('')
     .printLine('')
     .printLine('')
