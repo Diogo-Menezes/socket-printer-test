@@ -1,0 +1,36 @@
+const dataObj = {
+  restaurantId: '5ead89c14707270008f5bdac',
+  amount: '495',
+  basket: [
+    { name: 'Courgette Fries', price: '3.95', amount: 1 },
+    { name: 'Courgette Fries', price: '3.95', amount: 2 },
+    { name: 'Courgette Fries', price: '3.95', amount: 3 },
+  ],
+  customer: {
+    deliveryOptions: 'collection',
+    payOptions: [],
+    street: 'Montague Road',
+    houseNumber: '8',
+    townCity: 'Berkhamsted',
+    postcode: 'HP4 3DS',
+    specialRequest: 'Special request 1\nSpecial request 2',
+    allergiesIntolerances: 'I"m allergic to nuts and squirrels',
+    instructions: '',
+    firstName: 'Matt',
+    lastName: 'Lindop',
+    phone: '07710631670',
+    newsLetterLoql: false,
+    newsLetterBusinesses: true,
+  },
+  stripePaid: false,
+  stripe: {},
+  signupEmail: 'matt@thedesignofchange.com',
+  status: 'OPEN',
+  orderNum: 128,
+  createdAt: '2020-05-28T14:45:18.096Z',
+  updatedAt: '2020-05-28T14:45:18.096Z',
+  _id: '5ecfce7e9975f00008aaf2ec',
+  messageType: 'order',
+};
+
+module.exports = dataObj;
