@@ -4,12 +4,12 @@ const SerialPort = require('serialport');
 const port = '/dev/serial0';
 
 const secret = 'whysoserious';
-const id = ' 5eaa883c0cf47200076a4fea';
+const id = '5eaa883c0cf47200076a4fea';
 
 const secret1 = 'test';
 const id1 = '5ead89c14707270008f5bdac';
 
-const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret1}&businessId=${id1}`;
+const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
 const ws = new WebSocket(url);
 
 console.log('Set up heartbeat');
