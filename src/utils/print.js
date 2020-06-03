@@ -33,10 +33,7 @@ function print(printer, object) {
     .big(false)
     .printLine(`Order no: ${object.orderNum}`)
     .printLine('')
-    .printLine(
-      object.customer.deliveryOptions.chartAt(0).toUpperCase() +
-        object.customer.deliveryOptions.slice(1),
-    )
+    .printLine(`Delivery: ${object.customer.deliveryOptions}`)
     .printLine('')
     .printLine(`Allergies/Intolerance:`)
     .printLine(
@@ -101,7 +98,7 @@ function print(printer, object) {
   object.customer.postcode &&
     printer
       .printLine(`${object.customer.postcode}`)
-      
+
       .printLine('')
       .printLine('')
       .printLine('')
