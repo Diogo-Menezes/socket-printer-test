@@ -114,6 +114,7 @@ function print(printer, object) {
       .printLine('')
       .printLine('')
       .printLine('')
+      .printLine('')
       .horizontalLine(32);
 }
 
