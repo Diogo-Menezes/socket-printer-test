@@ -11,10 +11,12 @@ async function play() {
       console.log('done');
     }, 3000);
 
-    player.on('close', console.log('finished'));
+    // player.on('close', console.log('finished'));
   } catch (error) {
     console.error(error);
   }
 }
 
 play();
+
+
