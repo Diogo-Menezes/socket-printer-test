@@ -1,5 +1,5 @@
 const Omx = require('node-omxplayer');
-const soundPlayer = require('play-sound');
+var soundPlayer = require('play-sound')(opts = {})
 const playerSound = require('sound-play');
 const player = Omx('./doorbell-2.mp3');
 
@@ -14,9 +14,13 @@ async function play() {
   }
 }
 function play2() {
-  soundPlayer.play('./media/roadrunner.mp3', err => {
-    if (err) console.log(`Could not play sound: ${err}`);
-  });
+  soundPlayer.play(
+    './media/roadrunner.mp3',
+    { omxplayer: ['--vol', 9] },
+    err => {
+      if (err) console.log(`Could not play sound: ${err}`);
+    },
+  );
 }
 
 function play3() {
@@ -26,5 +30,5 @@ function play3() {
 }
 
 // play();
-// play2();
-play3();
+play2();
+// play3();
