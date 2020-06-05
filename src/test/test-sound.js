@@ -1,6 +1,6 @@
 const Omx = require('node-omxplayer');
 
-const player = Omx('doorbell-2.mp3', 'local', true, 9);
+const player = Omx('./doorbell-2.mp3');
 
 async function play() {
   try {
