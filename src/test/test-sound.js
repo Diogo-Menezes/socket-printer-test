@@ -15,7 +15,7 @@ async function play() {
 }
 function play2() {
   soundPlayer.play(
-    './media/roadrunner.mp3',
+    './doorbell-2.mp3',
     { omxplayer: ['--vol', 9] },
     err => {
       if (err) console.log(`Could not play sound: ${err}`);
@@ -24,7 +24,7 @@ function play2() {
 }
 
 function play3() {
-  playerSound.play('./media/roadrunner.mp3', err => {
+  playerSound.play('./doorbell-2.mp3', err => {
     if (err) console.log(`Could not play sound: ${err}`);
   });
 }
