@@ -26,5 +26,5 @@ function play3() {
 }
 
 // play();
-play2();
-// play3();
+// play2();
+play3();
