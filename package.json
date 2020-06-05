@@ -2,10 +2,12 @@
     "name": "socket-example",
     "scripts": {
         "start": "node src/index.js",
-        "test:print":"node src/test/print-test.js",
-        "test:connection":"node src/test/printer-connection.js"
+        "test:print": "node src/test/print-test.js",
+        "test:connection": "node src/test/printer-connection.js",
+        "test:sound": "node src/test/test-sound.js"
     },
     "dependencies": {
+        "node-omxplayer": "^0.6.1",
         "serialport": "^9.0.0",
         "thermalprinter": "^0.3.8",
         "ws": "7.3.0"
