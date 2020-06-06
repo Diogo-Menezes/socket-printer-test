@@ -2,7 +2,7 @@ const WebSocket = require('ws');
 const SerialPort = require('serialport');
 const Printer = require('thermalprinter');
 const sendToPrint = require('./utils/print');
-
+const ring = require('./utils/ring');
 const port = '/dev/serial0';
 
 const secret = 'whysoserious';
@@ -37,8 +37,10 @@ ws.on('message', data => {
       serialPort.on('open', function () {
         var printer = new Printer(serialPort);
 
-        printer.on('ready', function () {
+        printer.on('ready', async function () {
           console.log('printer ready');
+
+          await ring();
 
           sendToPrint(printer, dataObj);
 
@@ -46,7 +48,6 @@ ws.on('message', data => {
 
           printer.print(function () {
             console.log('done');
-            process.exit();
           });
         });
       });
