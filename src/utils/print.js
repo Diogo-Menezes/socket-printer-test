@@ -1,4 +1,5 @@
 const Printer = require('thermalprinter');
+const formatValue = require('./formatValue');
 
 function print(printer, object) {
   console.log('print function called');
@@ -11,7 +12,7 @@ function print(printer, object) {
     throw new Error('Invalid object');
   }
 
-  let total = 0;
+  // let total = 0;
 
   const date = new Intl.DateTimeFormat('en-UK', {
     year: 'numeric',
@@ -55,25 +56,31 @@ function print(printer, object) {
     .horizontalLine(32);
 
   object.basket.forEach(item => {
-    printer.printLine(`${item.amount}    ${item.name}   ${item.price}`);
+    printer.printLine(`${item.quantity}    ${item.name}   ${item.price}`);
 
-    if (item.optionsTotal > 0) {
-      printer.printLine('options total: ' + item.optionsTotal);
-      total += item.optionsTotal;
+    if (item?.optionName) {
+      printer.printLine(`      ${item.optionName}    ${item.optionPrice}`);
+      // total += item.optionPrice;
     }
 
-    if (item.extrasTotal > 0) {
-      printer.printLine('extras total: ' + item.extrasTotal);
-      total += item.extrasTotal;
+    if (item.extras?.length > 0) {
+      item.extras.map(extra => {
+        printer.printLine(`      ${extra.extraName}    ${extra.extraPrice}`);
+        // total += item.extraPrice;
+      });
+
+      // total += item.extrasTotal;
     }
 
-    total += parseFloat(item.amount) * parseFloat(item.price);
+    // total += parseFloat(item.quantity) * parseFloat(item.price);
   });
 
-  const formattedTotal = new Intl.NumberFormat('en-UK', {
-    style: 'currency',
-    currency: 'GBP',
-  }).format(+total);
+  // const formattedTotal = new Intl.NumberFormat('en-UK', {
+  //   style: 'currency',
+  //   currency: 'GBP',
+  // }).format(+total);
+
+  const formattedTotal = formatValue(item.amount);
 
   printer
     .printLine('')

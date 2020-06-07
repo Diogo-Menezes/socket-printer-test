@@ -30,7 +30,7 @@ ws.on('message', data => {
   const dataObj = JSON.parse(data);
   if (dataObj.messageType === 'order') {
     console.log(`Order received:`, JSON.stringify(dataObj, null, 2));
-
+    
     try {
       serialPort = new SerialPort(port, { baudRate: 19200 });
 
@@ -46,9 +46,7 @@ ws.on('message', data => {
 
           sendToPrint(printer, dataObj);
 
-          printer.print(function () {
-            console.log('done');
-          });
+          printer.print();
         });
       });
     } catch (error) {
