@@ -12,8 +12,6 @@ function print(printer, object) {
     throw new Error('Invalid object');
   }
 
-  // let total = 0;
-
   const date = new Intl.DateTimeFormat('en-UK', {
     year: 'numeric',
     month: 'long',
@@ -22,7 +20,9 @@ function print(printer, object) {
     minute: 'numeric',
     hour12: false,
   }).format(new Date(object.createdAt));
-
+  
+  
+  //Header
   printer
     .bold(true)
     .indent(0)
@@ -55,33 +55,24 @@ function print(printer, object) {
     .printLine('')
     .horizontalLine(32);
 
+  //Basket
   object.basket.forEach(item => {
     printer.printLine(`${item.quantity}    ${item.name}   ${item.price}`);
 
     if (item.optionName !== '') {
       printer.printLine(`      ${item.optionName}    ${item.optionPrice}`);
-      // total += item.optionPrice;
     }
 
-    if (item.extras?.length > 0) {
+    if (item.extras.length > 0) {
       item.extras.forEach(extra => {
         printer.printLine(`      ${extra.extraName}    ${extra.extraPrice}`);
-        // total += item.extraPrice;
       });
-
-      // total += item.extrasTotal;
     }
-
-    // total += parseFloat(item.quantity) * parseFloat(item.price);
   });
-
-  // const formattedTotal = new Intl.NumberFormat('en-UK', {
-  //   style: 'currency',
-  //   currency: 'GBP',
-  // }).format(+total);
 
   const formattedTotal = formatValue(item.amount);
 
+  //Total
   printer
     .printLine('')
     .small(false)
@@ -90,12 +81,16 @@ function print(printer, object) {
     .big(false)
     .printLine('')
     .printLine('')
+
+    //Special Requests
     .printLine('Special Requests:')
     .printText(
       object.customer.specialRequest ? object.customer.specialRequest : 'N/A',
     )
     .printLine('')
     .printLine('')
+
+    //Customer Details
     .printLine('Customer details:')
     .printLine(`${object.customer.firstName} ${object.customer.lastName}`);
 

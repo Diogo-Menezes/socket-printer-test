@@ -1,20 +1,17 @@
 const object = require('../mock/mockedOrder');
-
-let total = 0;
+const formatValue = require('../utils/formatValue');
 
 object.basket.forEach(item => {
+  console.log(`${item.quantity}    ${item.name}   ${item.price}`);
 
-  if (item.optionsTotal > 0) {
-    // printer.printLine(item.optionsTotal);
-    total += item.optionsTotal;
+  if (item.optionName !== '') {
+    console.log(`      ${item.optionName}    ${item.optionPrice}`);
   }
 
-  if (item.extrasTotal > 0) {
-    // printer.printLine(item.extrasTotal);
-    total += item.extrasTotal;
+  if (item.extras.length > 0) {
+    item.extras.forEach(extra => {
+      console.log(`      ${extra.extraName}    ${extra.extraPrice}`);
+    });
   }
-
-  total += parseFloat(item.amount) * parseFloat(item.price);
+  console.log(formatValue(object.amount));
 });
-
-console.log(total);
