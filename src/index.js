@@ -5,8 +5,8 @@ const sendToPrint = require('./utils/print');
 const ring = require('./utils/ring');
 const port = '/dev/serial0';
 
-const secret = 'whysoserious';
-const id = '5eaa883c0cf47200076a4fea';
+const secret = 'serious';
+const id = '5eddf28ee2d8e000087c0bb4';
 
 const secret1 = 'test';
 const id1 = '5ead89c14707270008f5bdac';

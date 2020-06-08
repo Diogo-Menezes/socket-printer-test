@@ -70,7 +70,7 @@ function print(printer, object) {
     }
   });
 
-  const formattedTotal = formatValue(item.amount);
+  const formattedTotal = formatValue(object.amount);
 
   //Total
   printer
