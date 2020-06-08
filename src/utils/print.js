@@ -58,13 +58,13 @@ function print(printer, object) {
   object.basket.forEach(item => {
     printer.printLine(`${item.quantity}    ${item.name}   ${item.price}`);
 
-    if (item?.optionName) {
+    if (item.optionName !== '') {
       printer.printLine(`      ${item.optionName}    ${item.optionPrice}`);
       // total += item.optionPrice;
     }
 
     if (item.extras?.length > 0) {
-      item.extras.map(extra => {
+      item.extras.forEach(extra => {
         printer.printLine(`      ${extra.extraName}    ${extra.extraPrice}`);
         // total += item.extraPrice;
       });
