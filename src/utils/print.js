@@ -60,12 +60,12 @@ function print(printer, object) {
     printer.printLine(`${item.quantity}    ${item.name}   ${item.price}`);
 
     if (item.optionName !== '') {
-      printer.printLine(`      ${item.optionName}    ${item.optionPrice}`);
+      printer.printLine(`     ${item.optionName}    ${item.optionPrice}`);
     }
 
     if (item.extras.length > 0) {
       item.extras.forEach(extra => {
-        printer.printLine(`      ${extra.extraName}    ${extra.extraPrice}`);
+        printer.printLine(`     ${extra.extraName}    ${extra.extraPrice}`);
       });
     }
   });

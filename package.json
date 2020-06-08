@@ -4,7 +4,8 @@
         "start": "node src/index.js",
         "test:print": "node src/test/print-test.js",
         "test:connection": "node src/test/printer-connection.js",
-        "test:sound": "node src/test/test-sound.js"
+        "test:sound": "node src/test/test-sound.js",
+        "log:print": "node src/test/log-print.js"
     },
     "dependencies": {
         "play-sound": "^1.1.3",
