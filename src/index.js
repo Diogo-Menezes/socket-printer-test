@@ -29,7 +29,7 @@ var timerID = 0;
 function keepAlive() {
   var timeout = 20000;
 
-  if (webSocket.readyState == webSocket.OPEN) {
+  if (ws.readyState == ws.OPEN) {
     webSocket.send('');
   }
 
