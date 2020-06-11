@@ -30,7 +30,8 @@ function keepAlive() {
   var timeout = 20000;
 
   if (ws.readyState == ws.OPEN) {
-    webSocket.send('');
+    console.log('Sent keep awake');
+    ws.send('');
   }
 
   timerId = setTimeout(keepAlive, timeout);
