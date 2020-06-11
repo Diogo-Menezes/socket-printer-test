@@ -24,13 +24,28 @@ setInterval(() => {
   ws.send(message);
 }, 540000);
 
-ws.on('open', () => console.log('connected'));
+var timerID = 0;
+
+function keepAlive() {
+  var timeout = 20000;
+
+  if (webSocket.readyState == webSocket.OPEN) {
+    webSocket.send('');
+  }
+
+  timerId = setTimeout(keepAlive, timeout);
+}
+
+ws.on('open', () => {
+  console.log('connected');
+  keepAlive();
+});
 
 ws.on('message', data => {
   const dataObj = JSON.parse(data);
   if (dataObj.messageType === 'order') {
     console.log(`Order received:`, JSON.stringify(dataObj, null, 2));
-    
+
     try {
       serialPort = new SerialPort(port, { baudRate: 19200 });
 
@@ -61,5 +76,12 @@ ws.on('message', data => {
 
 ws.on('close', () => {
   console.log('disconnected');
+  cancelKeepAlive();
   process.exit();
 });
+
+function cancelKeepAlive() {
+  if (timerId) {
+    clearTimeout(timerId);
+  }
+}
