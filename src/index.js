@@ -20,20 +20,30 @@ const options = {
 const rws = new ReconnectingWebSocket(url, [], options);
 
 rws.addEventListener('open', () => {
-  rws.send('hello!');
+  console.log('connected');
+
+  const message = JSON.stringify({
+    action: 'echo',
+    data: { messageType: 'heartbeat' },
+  });
+  rws.send(message);
 });
 
 rws.addEventListener('message', ({ data }) => {
   const dataObj = JSON.parse(data);
 
-  console.log('message received', dataObj.message);
+  console.log('data received', dataObj);
 
-  if (dataObj.message !== 'order') {
+  if (dataObj.messageType === 'heartbeat') {
+    console.log('heartbeat received');
+  }
+
+  if (dataObj.messageType !== 'order') {
     return;
   }
 
   try {
-    if (dataObj.message === 'order') {
+    if (dataObj.messageType === 'order') {
       console.log(`Order received:`, JSON.stringify(dataObj, null, 2));
     }
     const serialPort = new SerialPort(port, { baudRate: 19200 });
