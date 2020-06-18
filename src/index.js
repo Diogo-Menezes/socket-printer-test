@@ -1,5 +1,5 @@
 const ReconnectingWebSocket = require('reconnecting-websocket');
-const WS = require('ws');
+const Websocket = require('ws');
 const SerialPort = require('serialport');
 const Printer = require('thermalprinter');
 const sendToPrint = require('./utils/print');
@@ -13,14 +13,14 @@ const secret1 = 'test';
 const id1 = '5ead89c14707270008f5bdac';
 
 const options = {
-  WebSocket: WS,
+  WebSocket: Websocket,
   minUptime: 7200000, //2h
   connectionTimeout: 1000,
   maxRetries: 10,
 };
 
 const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
-const rws = new WebSocket(url, [], options);
+const ws = new ReconnectingWebSocket(url, [], options);
 
 console.log('Set up heartbeat');
 setInterval(() => {
@@ -86,7 +86,6 @@ ws.on('message', data => {
 ws.on('close', () => {
   console.log('disconnected');
   cancelKeepAlive();
-
   // process.exit();
 });
 
