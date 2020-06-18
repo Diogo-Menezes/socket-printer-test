@@ -1,6 +1,6 @@
 const dataObj = {
   restaurantId: '5ead89c14707270008f5bdac',
-  amount: '1240',
+  amount: '12.40',
   basket: [
     {
       name: 'Main 1',
