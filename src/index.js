@@ -9,7 +9,7 @@ const port = '/dev/serial0';
 const secret = 'serious';
 const id = '5edbead255ded300082a3724';
 
-const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
+const url = `wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
 
 const options = {
   WebSocket: WS,
