@@ -11,7 +11,7 @@ const id = '5edbead255ded300082a3724';
 
 const url = `wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
 
-let startTime;
+let startTime = new Date();
 
 const options = {
   WebSocket: WS,
@@ -22,7 +22,6 @@ const rws = new ReconnectingWebSocket(url, [], options);
 
 rws.addEventListener('open', () => {
   console.log('connected');
-  startTime = new Date();
 
   const message = JSON.stringify({
     action: 'echo',
