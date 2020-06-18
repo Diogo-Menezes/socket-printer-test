@@ -31,7 +31,7 @@ rws.addEventListener('open', () => {
 
 rws.addEventListener('message', ({ data }) => {
   const dataObj = JSON.parse(data);
-
+  
   console.log('data received', dataObj);
 
   if (dataObj.messageType === 'heartbeat') {
