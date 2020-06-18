@@ -11,16 +11,18 @@ const id = '5edbead255ded300082a3724';
 
 const url = `wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
 
+let startTime;
+
 const options = {
   WebSocket: WS,
   minUptime: 7200000, //2h
-  connectionTimeout: 7000000,
 };
 
 const rws = new ReconnectingWebSocket(url, [], options);
 
 rws.addEventListener('open', () => {
   console.log('connected');
+  startTime = new Date();
 
   const message = JSON.stringify({
     action: 'echo',
@@ -31,12 +33,8 @@ rws.addEventListener('open', () => {
 
 rws.addEventListener('message', ({ data }) => {
   const dataObj = JSON.parse(data);
-  
-  console.log('data received', dataObj);
 
-  if (dataObj.messageType === 'heartbeat') {
-    console.log('heartbeat received');
-  }
+  console.log(`message received: ${new Date()}`, dataObj);
 
   if (dataObj.messageType !== 'order') {
     return;
@@ -69,6 +67,6 @@ rws.addEventListener('message', ({ data }) => {
 });
 
 rws.addEventListener('close', () => {
-  console.log('disconnect');
+  console.log(`disconnected at ${new Date()}\nstarted at ${startTime}`);
   // process.exit();
 });
