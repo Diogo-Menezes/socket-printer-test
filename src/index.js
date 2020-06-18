@@ -26,7 +26,11 @@ rws.addEventListener('open', () => {
 rws.addEventListener('message', ({ data }) => {
   const dataObj = JSON.parse(data);
 
-  console.log(dataObj.message);
+  console.log('message received', dataObj.message);
+
+  if (dataObj.message !== 'order') {
+    return;
+  }
 
   try {
     if (dataObj.message === 'order') {
