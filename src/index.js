@@ -11,7 +11,8 @@ const id = '5edbead255ded300082a3724';
 
 const url = `wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
 
-let startTime = new Date();
+let processStartTime = new Date();
+let connectionTime;
 
 const options = {
   WebSocket: WS,
@@ -22,6 +23,8 @@ const rws = new ReconnectingWebSocket(url, [], options);
 
 rws.addEventListener('open', () => {
   console.log('connected');
+
+  connectionTime = new Date();
 
   const message = JSON.stringify({
     action: 'echo',
@@ -66,6 +69,8 @@ rws.addEventListener('message', ({ data }) => {
 });
 
 rws.addEventListener('close', () => {
-  console.log(`disconnected at ${new Date()}\nstarted at ${startTime}`);
-  // process.exit();
+  console.log(`process started at: ${processStartTime}`);
+  console.log(
+    `disconnected at: ${new Date()}\nconnected  at: ${connectionTime}`
+  );
 });
