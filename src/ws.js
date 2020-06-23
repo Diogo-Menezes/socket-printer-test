@@ -3,6 +3,7 @@ const SerialPort = require('serialport');
 const Printer = require('thermalprinter');
 const sendToPrint = require('./utils/print');
 const ring = require('./utils/ring');
+
 const port = '/dev/serial0';
 
 const secret = 'serious';
@@ -16,34 +17,27 @@ const ws = new WebSocket(url);
 
 console.log('Set up heartbeat');
 setInterval(() => {
-  console.log('Heartbeat sent');
+  console.log('Heartbeat sent:', processStartTime);
   const message = JSON.stringify({
     action: 'echo',
     data: { messageType: 'heartbeat' },
   });
   ws.send(message);
-}, 540000);
+}, 60000);
 
-var timerID = 0;
-
-function keepAlive() {
-  var timeout = 20000;
-
-  if (ws.readyState == ws.OPEN) {
-    console.log('Sent keep awake');
-    ws.send('');
-  }
-
-  timerId = setTimeout(keepAlive, timeout);
-}
+let processStartTime = new Date();
+let connectionTime;
 
 ws.on('open', () => {
-  console.log('connected');
-  keepAlive();
+  connectionTime = new Date();
+  console.log('connected:', connectionTime);
 });
 
 ws.on('message', data => {
   const dataObj = JSON.parse(data);
+
+  console.log(`message received: ${new Date()}`, dataObj);
+
   if (dataObj.messageType === 'order') {
     console.log(`Order received:`, JSON.stringify(dataObj, null, 2));
 
@@ -69,18 +63,40 @@ ws.on('message', data => {
       console.log(error);
     }
   }
-
-  if (dataObj.messageType === 'heartbeat') {
-    console.log('Heartbeat received');
-  }
 });
 
-ws.on('close', () => {
-  console.log('disconnected');
-  cancelKeepAlive();
+ws.on('close', async ({ reason }) => {
+  console.log(`process started at: ${processStartTime}`);
+  console.log(
+    `disconnected at: ${new Date()}\nconnected  at: ${connectionTime}`
+  );
+  console.log('reason:', reason);
+  await ring();
+  
+  //Restart websocket
   process.exit();
 });
 
+/**
+ * Set a timer to keep connection
+ */
+
+var timerID = 0;
+
+function keepAlive() {
+  var timeout = 20000;
+
+  if (ws.readyState == ws.OPEN) {
+    console.log('Sent keep awake');
+    ws.send('');
+  }
+
+  timerId = setTimeout(keepAlive, timeout);
+}
+
+/**
+ * Cancel timer
+ */
 function cancelKeepAlive() {
   if (timerId) {
     clearTimeout(timerId);

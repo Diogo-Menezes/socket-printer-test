@@ -48,6 +48,10 @@ rws.addEventListener('message', ({ data }) => {
     }
     const serialPort = new SerialPort(port, { baudRate: 19200 });
 
+    serialPort.on('error', error => {
+      console.log(error);
+    });
+
     serialPort.on('open', function () {
       var printer = new Printer(serialPort);
 
