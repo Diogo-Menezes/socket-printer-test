@@ -57,6 +57,10 @@ ws.on('message', data => {
           sendToPrint(printer, dataObj);
 
           printer.print();
+
+          serialPort.close(function () {
+            console.log('port closed');
+          });
         });
       });
     } catch (error) {
