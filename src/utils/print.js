@@ -51,29 +51,28 @@ function print(printer, object) {
     .printLine('')
     .small(true)
     //start
-    .left().printText(`Quantity   Name`)
-    .right().printText('Price')
+    .left()
+    .printText(`Quantity   Name`)
+    .right()
+    .printText('Price')
     //end
     // .printText(`Quantity   Name    Price`)
     .printLine('')
-    .horizontalLine(255);
+    .horizontalLine(55);
 
   //Basket
   object.basket.forEach(item => {
     printer.bold(true);
-    printer.left().printText(`${item.quantity}    ${item.name}`);
-    printer.right().printText(`${item.price}`);
+    printer.printLine(`${item.quantity}    ${item.name}   ${item.price}`);
     printer.bold(false);
 
     if (item.optionName !== '') {
-      printer.printText(`     ${item.optionName}`);
-      printer.right().printText(item.optionPrice);
+      printer.printLine(`      ${item.optionName}    ${item.optionPrice}`);
     }
 
     if (item.extras.length > 0) {
       item.extras.forEach(extra => {
-        printer.printText(`     ${extra.extraName}`);
-        printer.right().printText(`${extra.extraPrice}`);
+        printer.printLine(`      ${extra.extraName}    ${extra.extraPrice}`);
       });
     }
   });
