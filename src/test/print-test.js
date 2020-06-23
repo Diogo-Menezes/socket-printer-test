@@ -4,6 +4,7 @@ const print = require('../utils/print');
 const dataObj = require('../mock/mockedOrder');
 
 const port = '/dev/ttyUSB0';
+const port1 = '/dev/serial0';
 
 try {
   const serialPort = new SerialPort(port1, {
