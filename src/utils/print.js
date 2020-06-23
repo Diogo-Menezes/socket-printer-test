@@ -20,8 +20,7 @@ function print(printer, object) {
     minute: 'numeric',
     hour12: false,
   }).format(new Date(object.createdAt));
-  
-  
+
   //Header
   printer
     .bold(true)
@@ -40,7 +39,7 @@ function print(printer, object) {
     .printLine(
       object.customer.allergiesIntolerances
         ? object.customer.allergiesIntolerances
-        : 'N/A',
+        : 'N/A'
     )
     .printLine('')
     .inverse(true)
@@ -51,21 +50,30 @@ function print(printer, object) {
     .printLine(date)
     .printLine('')
     .small(true)
-    .printText(`Quantity   Name    Price`)
+    //start
+    .left().printText(`Quantity   Name`)
+    .right().printText('Price')
+    //end
+    // .printText(`Quantity   Name    Price`)
     .printLine('')
-    .horizontalLine(32);
+    .horizontalLine(255);
 
   //Basket
   object.basket.forEach(item => {
-    printer.printLine(`${item.quantity}    ${item.name}   ${item.price}`);
+    printer.bold(true);
+    printer.left().printText(`${item.quantity}    ${item.name}`);
+    printer.right().printText(`${item.price}`);
+    printer.bold(false);
 
     if (item.optionName !== '') {
-      printer.printLine(`     ${item.optionName}    ${item.optionPrice}`);
+      printer.printText(`     ${item.optionName}`);
+      printer.right().printText(item.optionPrice);
     }
 
     if (item.extras.length > 0) {
       item.extras.forEach(extra => {
-        printer.printLine(`     ${extra.extraName}    ${extra.extraPrice}`);
+        printer.printText(`     ${extra.extraName}`);
+        printer.right().printText(`${extra.extraPrice}`);
       });
     }
   });
@@ -85,7 +93,7 @@ function print(printer, object) {
     //Special Requests
     .printLine('Special Requests:')
     .printText(
-      object.customer.specialRequest ? object.customer.specialRequest : 'N/A',
+      object.customer.specialRequest ? object.customer.specialRequest : 'N/A'
     )
     .printLine('')
     .printLine('')
@@ -100,7 +108,7 @@ function print(printer, object) {
   //House number + street
   object.customer.houseNumber &&
     printer.printLine(
-      `${object.customer.houseNumber} ${object.customer.street}`,
+      `${object.customer.houseNumber} ${object.customer.street}`
     );
 
   //Town
@@ -117,7 +125,7 @@ function print(printer, object) {
       .printLine('')
       .printLine('')
       .printLine('')
-      .horizontalLine(32);
+      .horizontalLine(255);
 }
 
 module.exports = print;
