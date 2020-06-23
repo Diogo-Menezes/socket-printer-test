@@ -65,14 +65,15 @@ ws.on('message', data => {
   }
 });
 
-ws.on('close', async ({ reason }) => {
+ws.on('close', async ({ code, reason }) => {
   console.log(`process started at: ${processStartTime}`);
   console.log(
     `disconnected at: ${new Date()}\nconnected  at: ${connectionTime}`
   );
+  console.log('code:', code);
   console.log('reason:', reason);
   await ring();
-  
+
   //Restart websocket
   process.exit();
 });
