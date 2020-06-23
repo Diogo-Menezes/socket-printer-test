@@ -50,13 +50,7 @@ function print(printer, object) {
     .printLine(date)
     .printLine('')
     .small(true)
-    //start
-    .left()
-    .printText(`Quantity   Name`)
-    .right()
-    .printText('Price')
-    //end
-    // .printText(`Quantity   Name    Price`)
+    .printText(`Quantity   Name    Price`)
     .printLine('')
     .horizontalLine(55);
 
