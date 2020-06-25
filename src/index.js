@@ -48,7 +48,10 @@ ws.on('message', data => {
   if (dataObj.messageType === 'heartbeat') {
     if (orders.length > 0) {
       console.log('orders in queue:', orders.length);
-      printProcess(orders[0]);
+
+      if (!isPrinting) {
+        printProcess(orders[0]);
+      }
     }
   }
 
@@ -65,7 +68,7 @@ ws.on('message', data => {
 
 function printProcess(dataObj) {
   try {
-   let serialPort = new SerialPort(port, { baudRate: 19200 });
+    let serialPort = new SerialPort(port, { baudRate: 19200 });
 
     serialPort.on('open', function () {
       var printer = new Printer(serialPort);
@@ -81,10 +84,10 @@ function printProcess(dataObj) {
         sendToPrint(printer, dataObj);
 
         printer.print(function () {
+          isPrinting = false;
+          orders.slice(0, 1);
           serialPort.close(function () {
             console.log('port closed');
-            isPrinting = false;
-            orders.slice(0, 1);
           });
         });
       });
