@@ -9,17 +9,16 @@ const port = '/dev/serial0';
 const secret = 'serious';
 const id = '5edbead255ded300082a3724';
 
-const secret1 = 'test';
-const id1 = '5ead89c14707270008f5bdac';
-
 const url = `  wss://lmss7g0g38.execute-api.us-east-1.amazonaws.com/dev?Auth=${secret}&businessId=${id}`;
-const ws = new WebSocket(url);
 
+let intervalId = 0;
 let orders = [];
 let isPrinting = false;
 
 let processStartTime = new Date();
 let connectionTime;
+
+let ws = new WebSocket(url);
 
 function sendHeartbeat() {
   const message = JSON.stringify({
@@ -29,38 +28,13 @@ function sendHeartbeat() {
   ws.send(message);
 }
 
-console.log('Set up heartbeat');
-setInterval(() => {
-  sendHeartbeat();
-  console.log('Heartbeat sent:', processStartTime);
-}, 30000);
-
-ws.on('open', () => {
-  connectionTime = new Date();
-  console.log('connected:', connectionTime);
-});
-
-ws.on('message', data => {
-  const dataObj = JSON.parse(data);
-
-  console.log(`message received: ${new Date()}`, dataObj);
-
-  if (dataObj.messageType === 'heartbeat') {
-    if (orders.length > 0) {
-      console.log('orders in queue:', orders.length);
-
-      if (isPrinting) return;
-
-      printProcess(orders[0]);
-      orders.splice(0, 1);
-    }
-  }
-
-  if (dataObj.messageType === 'order') {
-    orders.push(dataObj);
+function setHeartbeat() {
+  console.log('Set up heartbeat');
+  intervalId = setInterval(() => {
     sendHeartbeat();
-  }
-});
+    console.log('Heartbeat sent:', new Date());
+  }, 30000);
+}
 
 function printProcess(dataObj) {
   try {
@@ -82,6 +56,7 @@ function printProcess(dataObj) {
         printer.print(function () {
           console.log('print set to false');
           isPrinting = false;
+          orders.splice(0, 1);
 
           serialPort.close(function () {
             console.log('port closed');
@@ -95,41 +70,48 @@ function printProcess(dataObj) {
   }
 }
 
-ws.on('close', async ({ code, reason }) => {
-  console.log(`process started at: ${processStartTime}`);
-  console.log(
-    `disconnected at: ${new Date()}\nconnected  at: ${connectionTime}`
-  );
-  console.log('code:', code);
-  console.log('reason:', reason);
-  await ring();
+function startWebSocket() {
+  setHeartbeat();
+  ws = new WebSocket(url);
 
-  //Restart websocket
-  process.exit();
-});
+  ws.on('open', () => {
+    connectionTime = new Date();
+    console.log('connected:', connectionTime);
+  });
 
-/**
- * Set a timer to keep connection
- */
+  ws.on('message', data => {
+    const dataObj = JSON.parse(data);
 
-var timerID = 0;
+    console.log(`message received: ${new Date()}`, dataObj);
 
-function keepAlive() {
-  var timeout = 20000;
+    if (dataObj.messageType === 'heartbeat') {
+      if (orders.length > 0) {
+        console.log('orders in queue:', orders.length);
 
-  if (ws.readyState == ws.OPEN) {
-    console.log('Sent keep awake');
-    ws.send('');
-  }
+        if (isPrinting) return;
 
-  timerId = setTimeout(keepAlive, timeout);
+        printProcess(orders[0]);
+      }
+    }
+
+    if (dataObj.messageType === 'order') {
+      orders.push(dataObj);
+      sendHeartbeat();
+    }
+  });
+
+  ws.on('close', async ({ code, reason }) => {
+    console.log(`process started at: ${processStartTime}`);
+    console.log(
+      `disconnected at: ${new Date()}\nconnected  at: ${connectionTime}`
+    );
+    console.log('code:', code);
+    console.log('reason:', reason);
+
+    //Restart websocket
+    clearInterval(intervalId);
+    startWebSocket();
+  });
 }
 
-/**
- * Cancel timer
- */
-function cancelKeepAlive() {
-  if (timerId) {
-    clearTimeout(timerId);
-  }
-}
+startWebSocket();
