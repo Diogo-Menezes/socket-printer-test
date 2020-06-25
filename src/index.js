@@ -54,9 +54,9 @@ function printProcess(dataObj) {
         sendToPrint(printer, dataObj);
 
         printer.print(function () {
-          console.log('print set to false');
           isPrinting = false;
           orders.splice(0, 1);
+          console.log('print finished, orders in queue:' + orders.length);
 
           serialPort.close(function () {
             console.log('port closed');
@@ -86,7 +86,7 @@ function startWebSocket() {
 
     if (dataObj.messageType === 'heartbeat') {
       if (orders.length > 0) {
-        console.log('orders in queue:', orders.length);
+        console.log('heartbeat received, orders in queue:', orders.length);
 
         if (isPrinting) return;
 
