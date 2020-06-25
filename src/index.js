@@ -59,7 +59,7 @@ ws.on('message', data => {
       return;
     }
 
-    printProcess(order[0]);
+    printProcess(orders[0]);
   }
 });
 
