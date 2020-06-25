@@ -49,20 +49,15 @@ ws.on('message', data => {
     if (orders.length > 0) {
       console.log('orders in queue:', orders.length);
 
-      if (!isPrinting) {
-        printProcess(orders[0]);
-      }
+      if (isPrinting) return;
+
+      printProcess(orders[0]);
     }
   }
 
   if (dataObj.messageType === 'order') {
     orders.push(dataObj);
-
-    if (isPrinting) {
-      return;
-    }
-
-    printProcess(orders[0]);
+    sendHeartbeat();
   }
 });
 
@@ -86,6 +81,7 @@ function printProcess(dataObj) {
         printer.print(function () {
           isPrinting = false;
           orders.slice(0, 1);
+
           serialPort.close(function () {
             console.log('port closed');
           });
@@ -93,7 +89,7 @@ function printProcess(dataObj) {
       });
     });
   } catch (error) {
-    isPrinting(false);
+    isPrinting = false;
     console.log(error);
   }
 }
