@@ -52,6 +52,7 @@ ws.on('message', data => {
       if (isPrinting) return;
 
       printProcess(orders[0]);
+      orders.splice(0, 1);
     }
   }
 
@@ -79,8 +80,8 @@ function printProcess(dataObj) {
         sendToPrint(printer, dataObj);
 
         printer.print(function () {
+          console.log('print set to false');
           isPrinting = false;
-          orders.slice(0, 1);
 
           serialPort.close(function () {
             console.log('port closed');
