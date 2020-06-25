@@ -65,7 +65,7 @@ ws.on('message', data => {
 
 function printProcess(dataObj) {
   try {
-    serialPort = new SerialPort(port, { baudRate: 19200 });
+   let serialPort = new SerialPort(port, { baudRate: 19200 });
 
     serialPort.on('open', function () {
       var printer = new Printer(serialPort);
