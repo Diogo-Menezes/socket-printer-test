@@ -72,7 +72,6 @@ function printProcess(dataObj) {
 
 function startWebSocket() {
   setHeartbeat();
-  ws = new WebSocket(url);
 
   ws.on('open', () => {
     connectionTime = new Date();
@@ -110,7 +109,7 @@ function startWebSocket() {
 
     //Restart websocket
     clearInterval(intervalId);
-    startWebSocket();
+    ws = new WebSocket(url);
   });
 }
 
