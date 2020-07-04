@@ -43,7 +43,7 @@ function print(printer, object) {
     )
     .printLine('')
     .inverse(true)
-    .printLine(object.stripePaid ? ' Online ' : ' Pay on collection ')
+    .printLine(object.payOptions.includes('online') ? ' Online ' : ' Pay on collection ')
     .inverse(false)
     .printLine('')
     .printLine('Order received')
