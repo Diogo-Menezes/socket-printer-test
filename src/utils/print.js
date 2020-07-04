@@ -44,7 +44,7 @@ function print(printer, object) {
     .printLine('')
     .inverse(true)
     .printLine(
-      object.payOptions && object.payOptions.includes('online')
+      object.customer.payOptions && object.customer.payOptions.includes('online')
         ? ' Paid online '
         : ' Pay on collection '
     )
